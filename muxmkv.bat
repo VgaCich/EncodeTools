@@ -1,14 +1,37 @@
 @echo off
 setlocal ENABLEEXTENSIONS
 
-if "%vlang%"=="" set vlang=jpn
-if "%alang%"=="" set alang=jpn
-if "%outdir%"=="" set outdir=..
+set vlang=jpn
+set alang=jpn
+set outdir=..
+set dim=1280x720
 set debug=
-if "%1"=="-d" set debug=echo
 
-for /F "tokens=2 delims=." %%d in ("%~n0") do set dim=%%d
-if "%dim%" == "" goto :eof
+echo muxmkv 1.0
+:argloop
+if "%1" == "" goto :argend
+set var=
+if "%1" == "-d" set debug=echo & goto :argnext
+if "%1" == "-h" call :help & goto :eof
+if "%1" == "-o" set var=outdir
+if "%1" == "-a" set var=alang
+if "%1" == "-v" set var=vlang
+if "%1" == "-r" set var=dim
+if "%var%" == "" echo Unknown argument: "%1" & goto :argnext
+set %var%=%2
+shift /1
+:argnext
+shift /1
+goto :argloop
+:argend
+
+if not "%debug%" == "" (
+  echo vlang=%vlang%
+  echo alang=%alang%
+  echo outdir=%outdir%
+  echo dim=%dim%
+  echo debug=%debug%
+)
 
 for %%i in (*.mkv) do (
   set attachs=
@@ -59,3 +82,14 @@ for %%i in (*.mkv) do (
   echo.
   endlocal
 )
+
+goto :eof
+:help
+echo Usage: %~n0 [options]
+echo Options:
+echo   -o ^<outdir^>          Set output path          Default: ..
+echo   -a ^<lang^>            Set audio language       Default: jpn
+echo   -v ^<lang^>            Set video language       Default: jpn
+echo   -r ^<dim^>             Set video resolution     Default: 1280x720
+echo   -h                     Show help
+echo   -d                     Debug mode
