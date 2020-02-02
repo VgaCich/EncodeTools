@@ -87,9 +87,9 @@ goto :eof
 :help
 echo Usage: %~n0 [options]
 echo Options:
-echo   -o ^<outdir^>          Set output path          Default: ..
-echo   -a ^<lang^>            Set audio language       Default: jpn
-echo   -v ^<lang^>            Set video language       Default: jpn
-echo   -r ^<dim^>             Set video resolution     Default: 1280x720
+echo   -o ^<outdir^>            Set output path          Default: ..
+echo   -a ^<lang^>              Set audio language       Default: jpn
+echo   -v ^<lang^>              Set video language       Default: jpn
+echo   -r ^<dim^>               Set video resolution     Default: 1280x720
 echo   -h                     Show help
 echo   -d                     Debug mode
