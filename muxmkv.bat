@@ -18,7 +18,7 @@ if "%1" == "-a" set var=alang
 if "%1" == "-v" set var=vlang
 if "%1" == "-r" set var=dim
 if "%var%" == "" echo Unknown argument: "%1" & goto :argnext
-set %var%=%2
+set %var%=%~2
 shift /1
 :argnext
 shift /1

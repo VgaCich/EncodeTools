@@ -88,7 +88,7 @@ SubtitleExt = {
 }
 
 print(File)
-BaseName = File:match("(.*%.).-")
+BaseName = File:match(".-([^\\/]-)%.?[^%.\\/]*$") .. "."
 for i, Track in ipairs(Tracks) do
   if Track.Type == "subtitles" then
     Cmd = Cmd or "mkvextract tracks \"" .. File .. "\" "
