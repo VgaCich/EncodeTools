@@ -80,16 +80,44 @@ end
 
 if not arg[1] then
   print("Fonts copier")
-  print("Usage: CopyFonts.lua <fonts list> <fonts map>")
+  print("Usage: CopyFonts.lua <fonts list> [fonts map]")
   os.exit()
 end
 
-if not FileExists(arg[1]) or not FileExists(arg[2] or "") then
+if not FileExists(arg[1]) or not FileExists(arg[2] or arg[1]) then
   print("Invalid file(s) specified")
   os.exit()
 end
 
 Fonts = LoadList(arg[1])
+
+if not arg[2] then
+  local FontsList = {
+    Add = function(Self, Font)
+      for i = 1, #Self do
+        if Self[i] == Font then
+          return
+        end
+      end
+      table.insert(Self, Font)
+    end
+  }
+
+  for _, Item in ipairs(Fonts) do
+    for _, Font in ipairs(Item) do
+      FontsList:Add(Font)
+    end
+  end
+
+  print("Fonts in list:")
+  for _, Font in ipairs(FontsList) do
+    print(Font)
+  end
+  print()
+  
+  os.exit()
+end
+
 Map = LoadList(arg[2])
 
 for i, Item in ipairs(Fonts) do
