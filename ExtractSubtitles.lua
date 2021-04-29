@@ -73,7 +73,8 @@ while CurLine and (CurLine <= #FileInfo) do
       Name = FileInfo:GetParam("Name", CurLine+1, "A track");
       Number = FileInfo:GetParam("Track number", CurLine+1, "A track");
       Type = FileInfo:GetParam("Track type", CurLine+1, "A track");
-      UID = FileInfo:GetParam("Track UID", CurLine+1, "A track");
+      UID = FileInfo:GetParam("Track UID", CurLine+1, "A track"); 
+      Language = FileInfo:GetParam("Language", CurLine+1, "A track");
       CodecID = FileInfo:GetParam("Codec ID", CurLine+1, "A track");
     })
   end
@@ -93,7 +94,7 @@ for i, Track in ipairs(Tracks) do
   if Track.Type == "subtitles" then
     Cmd = Cmd or "mkvextract tracks \"" .. File .. "\" "
     local TID = Track.Number:match(".*mkvextract:%s*(%d*).-")
-    local Name = Names:GetUnique(RemoveForbiddenChars(Track.Name or tostring(i))) .. (SubtitleExt[Track.CodecID] or ".sub")
+    local Name = Names:GetUnique(RemoveForbiddenChars(Track.Name or Track.Language or tostring(i))) .. (SubtitleExt[Track.CodecID] or ".sub")
     Cmd = Cmd .. "\"" .. TID .. ":" .. Dir .. BaseName .. Name .. "\" "
   end
 end
